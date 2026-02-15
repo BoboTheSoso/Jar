@@ -38,8 +38,14 @@ async def on_message(message):
         return
     
     #check if the message content is "amongus" (case-insensitive)
-    if message.content.lower() == 'amongus':
+    if message.content.lower() == 'amongus' or message.content.lower() == 'amogus':
         await message.channel.send(f'3(\\_)x(\\_)E') #reply with a gift
+    
+    if 'monke' in message.content.lower():
+        await message.channel.send('🐒')
+
+    if message.content.lower() == 'are you ready?':
+        await message.channel.send('Watch this. AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH')
 
     await bot.process_commands(message) #process commands after handling the message event
 
