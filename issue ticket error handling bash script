@@ -1,0 +1,49 @@
+  GNU nano 8.4                                                                                                          run_jar.sh                                                                                                                    
+#!/bin/bash
+
+LOGDIR="/home/bobo-the-soso/Jar/errors.log"
+mkdir -p "$LOGDIR"
+ENV_PATH="/home/bobo-the-soso/Jar/bot-env/bin/activate"
+BOT_PATH="/home/bobo-the-soso/Jar/jar.py"
+REPO="BoboTheSoso/Jar"
+
+MAX_CRASHES=3
+WINDOW=3600 #1 hour window
+
+
+while true; do
+        echo "Initiating Jar bot at $(date)"
+        #activate environment for bot
+        source "$ENV_PATH"
+        TEMP_ERR=$(mktemp)
+        #run bot in the environment
+        python3 "$BOT_PATH" 2> "$TEMP_ERR"
+        EXIT_CODE=$?
+
+
+        if [ "$EXIT_CODE" -ne 0 ]; then
+                TIME_STAMP=$(date '+%Y-%m-%d_%H-%M-%S')
+                ERROR_FILE="$LOGDIR/$TIME_STAMP.err"
+                mv "$TEMP_ERR" "$ERROR_FILE"
+
+                RECENT_MOD_COUNT=$(find "$LOGDIR" -type f -name "*.err" -mmin -$((WINDOW/60)) | wc -l)
+
+                #Creating an issue in the repo
+                if [ "$RECENT_MOD_COUNT" -ge "$MAX_CRASHES" ]; then
+                        gh issue create \
+                                --repo "$REPO" \
+                                --title "Jar Bot Consecutive Crash Event $TIME_STAMP, restart halted." \
+                                --body "$(cat "$ERROR_FILE")"
+                        exit 1
+                else
+                        gh issue create \
+                                --repo "$REPO" \
+                                --title "Jar Bot Crash Event $TIME_STAMP" \
+                                --body "$(cat "$ERROR_FILE")"
+                        echo "Restarting Jar."
+                        sleep 60
+                fi
+        else
+                rm "$TEMP_ERR"
+        fi
+done
