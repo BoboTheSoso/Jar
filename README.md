@@ -12,3 +12,9 @@ Future commands:
 /jar_submission : See all submissions made by a user
 /jar_scoreboard : list all of the users and dollar amounts in descending order
 maybe more?
+
+BASH SCRIPT under issue ticket error handling file:
+Script runs the jar.py program until an error is encoutered or the programm is ^C or killed. Upon encountering an error, it creates a file with the timestamp as the title and the error message as the content, and saves it into the LOGDIR directory. Afterwhich, it creates an ISSUE ticket with the defined repository, with the content of the LOGDIR file as body, then runs jar.py again. After 3 consecutive errors logged in the same hour, an alternative ISSUE ticket is created to report consecutive crashes, and jar.py is NOT restarted.
+
+Info for booting on start (not from autostart due to the required dependencies):
+https://blog.usedbytes.com/2019/11/run-at-startup-without-rc.local/
