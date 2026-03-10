@@ -10,6 +10,7 @@ REPO="BoboTheSoso/Jar"
 MAX_CRASHES=3
 WINDOW=3600 #1 hour window
 
+trap "echo 'Exiting run_jar.sh'; exit 0" SIGINT SIGTERM
 
 while true; do
         echo "Initiating Jar bot at $(date)"
