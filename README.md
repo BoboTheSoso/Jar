@@ -6,8 +6,6 @@ The jarDB SQLite database will keep track of each dollar put in the jar, the tex
 COMMANDS:
 /jar : pulls up two buttons to add a dollar for yourself (self report) or for someone else (Report for someone else)
 /jar_stats : select user to see how many dollars they have in the jar
-
-Future commands:
 /jar_reported : See the list of all dollars put in the jar for a specific user
 /jar_submission : See all submissions made by a user
 /jar_scoreboard : list all of the users and dollar amounts in descending order
@@ -18,3 +16,7 @@ Script runs the jar.py program until an error is encoutered or the programm is ^
 
 Info for booting on start (not from autostart due to the required dependencies):
 https://blog.usedbytes.com/2019/11/run-at-startup-without-rc.local/
+
+NEED WORK:
+Bot works in an environment. Needs a way to back-up the integrated database and to retrieve last backup on boot so data isn't lost.
+Is there a way to store it on the respective discord server??
